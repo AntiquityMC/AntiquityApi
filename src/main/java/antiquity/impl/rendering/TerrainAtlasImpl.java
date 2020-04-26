@@ -18,6 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+// TODO: Horizontal offsets (yes, those are sadly needed; not all mods have 16n blocks)
 public enum TerrainAtlasImpl implements TerrainAtlas {
     INSTANCE;
 

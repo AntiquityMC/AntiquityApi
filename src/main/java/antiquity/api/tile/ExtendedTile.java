@@ -14,7 +14,6 @@ public interface ExtendedTile {
      * @return the texture path
      */
     default String getTexturePath() {
-        // TODO: Implement for LevelRenderer
         return "/terrain.png";
     }
 
