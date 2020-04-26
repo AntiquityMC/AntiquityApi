@@ -1,4 +1,4 @@
-package antiquity.mixin;
+package antiquity.mixin.bugfix;
 
 import com.mojang.minecraft.MinecraftApplet;
 import org.spongepowered.asm.mixin.Mixin;

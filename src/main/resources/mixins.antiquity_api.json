@@ -4,9 +4,8 @@
   "package": "antiquity.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "DirtyChunkSorterMixin",
-    "DistanceSorterMixin",
-    "MinecraftAppletMixin"
+    "bugfix.MinecraftAppletMixin",
+    "rendering.InGameHudMixin"
   ],
   "injectors": {
     "defaultRequire": 1
