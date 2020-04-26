@@ -1,4 +1,4 @@
-package antiquity.api.tile;
+package io.github.juuxel.antiquity.api.tile;
 
 import com.mojang.minecraft.level.tile.Tile;
 

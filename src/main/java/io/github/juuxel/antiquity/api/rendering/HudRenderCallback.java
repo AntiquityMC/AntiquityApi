@@ -1,4 +1,4 @@
-package antiquity.api.rendering;
+package io.github.juuxel.antiquity.api.rendering;
 
 import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.event.EventFactory;

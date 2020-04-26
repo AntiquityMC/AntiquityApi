@@ -1,7 +1,7 @@
-package antiquity.impl.rendering;
+package io.github.juuxel.antiquity.impl.rendering;
 
-import antiquity.api.rendering.TerrainAtlas;
-import antiquity.api.tile.ExtendedTile;
+import io.github.juuxel.antiquity.api.rendering.TerrainAtlas;
+import io.github.juuxel.antiquity.api.tile.ExtendedTile;
 import com.mojang.minecraft.level.tile.Tile;
 import com.mojang.minecraft.renderer.Textures;
 import org.apache.logging.log4j.LogManager;

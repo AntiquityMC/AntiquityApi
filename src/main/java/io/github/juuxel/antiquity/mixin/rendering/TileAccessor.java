@@ -1,4 +1,4 @@
-package antiquity.mixin.rendering;
+package io.github.juuxel.antiquity.mixin.rendering;
 
 import com.mojang.minecraft.level.tile.Tile;
 import org.spongepowered.asm.mixin.Mixin;

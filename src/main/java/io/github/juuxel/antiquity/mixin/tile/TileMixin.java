@@ -1,6 +1,6 @@
-package antiquity.mixin.tile;
+package io.github.juuxel.antiquity.mixin.tile;
 
-import antiquity.api.tile.ExtendedTile;
+import io.github.juuxel.antiquity.api.tile.ExtendedTile;
 import com.mojang.minecraft.level.tile.Tile;
 import com.mojang.minecraft.level.tile.Tile$SoundGroup;
 import org.spongepowered.asm.mixin.Mixin;

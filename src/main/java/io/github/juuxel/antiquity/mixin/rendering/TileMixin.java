@@ -1,8 +1,8 @@
-package antiquity.mixin.rendering;
+package io.github.juuxel.antiquity.mixin.rendering;
 
-import antiquity.api.rendering.TerrainAtlas;
-import antiquity.api.tile.ExtendedTile;
-import antiquity.impl.rendering.TerrainAtlasImpl;
+import io.github.juuxel.antiquity.api.rendering.TerrainAtlas;
+import io.github.juuxel.antiquity.api.tile.ExtendedTile;
+import io.github.juuxel.antiquity.impl.rendering.TerrainAtlasImpl;
 import com.mojang.minecraft.level.tile.Tile;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.*;

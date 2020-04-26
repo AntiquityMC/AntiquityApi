@@ -1,6 +1,6 @@
-package antiquity.mixin.rendering;
+package io.github.juuxel.antiquity.mixin.rendering;
 
-import antiquity.impl.rendering.TerrainAtlasImpl;
+import io.github.juuxel.antiquity.impl.rendering.TerrainAtlasImpl;
 import com.mojang.minecraft.renderer.Textures;
 import org.lwjgl.BufferUtils;
 import org.spongepowered.asm.mixin.Mixin;

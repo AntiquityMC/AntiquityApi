@@ -1,6 +1,6 @@
-package antiquity.mixin.rendering;
+package io.github.juuxel.antiquity.mixin.rendering;
 
-import antiquity.api.rendering.HudRenderCallback;
+import io.github.juuxel.antiquity.api.rendering.HudRenderCallback;
 import com.mojang.minecraft.gui.InGameHud;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

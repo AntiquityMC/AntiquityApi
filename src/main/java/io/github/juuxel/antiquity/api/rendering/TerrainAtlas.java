@@ -1,6 +1,6 @@
-package antiquity.api.rendering;
+package io.github.juuxel.antiquity.api.rendering;
 
-import antiquity.impl.rendering.TerrainAtlasImpl;
+import io.github.juuxel.antiquity.impl.rendering.TerrainAtlasImpl;
 
 /**
  * The terrain atlas contains all tile textures.
