@@ -1,4 +1,4 @@
-package net.fabricmc.example.mixin;
+package antiquity.mixin;
 
 import com.mojang.minecraft.level.Chunk;
 import com.mojang.minecraft.level.DirtyChunkSorter;
@@ -10,6 +10,7 @@ import java.util.Comparator;
 public class DirtyChunkSorterMixin implements Comparator<Chunk> {
     @Override
     public int compare(Chunk first, Chunk second) {
+        // TODO: Implement this based on 13a
         return 0;
     }
 }

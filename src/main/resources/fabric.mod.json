@@ -1,33 +1,27 @@
 {
   "schemaVersion": 1,
-  "id": "modid",
+  "id": "antiquity_api",
   "version": "${version}",
 
-  "name": "Example Mod",
-  "description": "This is an example description! Tell everyone what your mod is about!",
+  "name": "Antiquity API",
+  "description": "A modding API for Classic 0.30.",
   "authors": [
-    "Me!"
+    "Juuz"
   ],
   "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "sources": "https://github.com/Juuxel/AntiquityApi"
   },
 
-  "license": "CC0-1.0",
-  "icon": "assets/modid/icon.png",
+  "license": "MIT",
 
   "environment": "*",
-  "entrypoints": {
-    "main": [
-      "net.fabricmc.example.ExampleMod"
-    ]
-  },
   "mixins": [
-    "modid.mixins.json"
+    "mixins.antiquity_api.json"
   ],
 
   "depends": {
-    "fabricloader": "*"
+    "fabricloader": ">=0.4.9",
+    "fabric-api-base": ">=0.1.3"
   },
   "suggests": {
     "flamingo": "*"

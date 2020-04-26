@@ -1,4 +1,4 @@
-package net.fabricmc.example.mixin;
+package antiquity.mixin;
 
 import com.mojang.minecraft.Player;
 import com.mojang.minecraft.level.Chunk;
@@ -10,7 +10,8 @@ import java.util.Comparator;
 
 @Mixin(DistanceSorter.class)
 public class DistanceSorterMixin implements Comparator<Chunk> {
-    @Shadow private Player player;
+    @Shadow
+    private Player player;
 
     @Override
     public int compare(Chunk first, Chunk second) {
