@@ -13,10 +13,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
 
 public enum TerrainAtlasImpl implements TerrainAtlas {
     INSTANCE;
@@ -32,6 +30,14 @@ public enum TerrainAtlasImpl implements TerrainAtlas {
 
     @Override
     public void add(String path) {
+        Objects.requireNonNull(path, "path");
+
+        if (!path.startsWith("/")) {
+            throw new IllegalArgumentException("path must start with /");
+        } else if (!path.endsWith(".png")) {
+            throw new IllegalArgumentException("path must end with .png");
+        }
+
         if (!paths.contains(path)) {
             paths.add(path);
         }

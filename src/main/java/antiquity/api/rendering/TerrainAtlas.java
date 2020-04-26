@@ -14,6 +14,8 @@ public interface TerrainAtlas {
      * Adds a texture path to the terrain atlas.
      *
      * @param path the path; must start with {@code /} and end with {@code .png}
+     * @throws NullPointerException     if the path is null
+     * @throws IllegalArgumentException if the path is otherwise invalid
      */
     void add(String path);
 
