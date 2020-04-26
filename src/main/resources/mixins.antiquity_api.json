@@ -5,8 +5,12 @@
   "compatibilityLevel": "JAVA_8",
   "mixins": [
     "bugfix.MinecraftAppletMixin",
-    "rendering.CreativeBuildScreenMixin",
+    "rendering.BlockParticleMixin",
+    "rendering.FlowerTileMixin",
     "rendering.InGameHudMixin",
+    "rendering.TexturesMixin",
+    "rendering.TileAccessor",
+    "rendering.TileMixin",
     "tile.TileMixin"
   ],
   "injectors": {
