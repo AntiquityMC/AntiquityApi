@@ -16,7 +16,7 @@ abstract class TileMixin implements ExtendedTile {
     private int antiquity_method_421_cachedSide;
 
     @Inject(method = "method_421", at = @At("HEAD"))
-    private void onMethod_421(Tesselator arg, int x, int y, int z, int side, int tex, CallbackInfo ci) {
+    private void antiquity_onMethod_421(Tesselator arg, int x, int y, int z, int side, int tex, CallbackInfo ci) {
         this.antiquity_method_421_cachedSide = side;
     }
 
@@ -33,7 +33,7 @@ abstract class TileMixin implements ExtendedTile {
 
     // TODO: Investigate renderBackFace
     @ModifyConstant(method = "method_421", constant = @Constant(floatValue = 256), slice = @Slice(from = @At(value = "CONSTANT", args = "floatValue=256", ordinal = 2)))
-    private float modifyV(float original) {
+    private float antiquity_modifyV(float original) {
         return TerrainAtlas.INSTANCE.getHeight();
     }
 }

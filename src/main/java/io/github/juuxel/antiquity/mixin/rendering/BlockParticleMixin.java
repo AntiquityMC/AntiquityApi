@@ -21,7 +21,7 @@ abstract class BlockParticleMixin extends Particle {
     }
 
     @Inject(method = "<init>", at = @At("RETURN"))
-    private void onConstruct(Level level, float x, float y, float z, float xs, float ys, float zs, Tile tile, CallbackInfo info) {
+    private void antiquity_onConstruct(Level level, float x, float y, float z, float xs, float ys, float zs, Tile tile, CallbackInfo info) {
         field_201 += TerrainAtlasImpl.getTextureOffset(ExtendedTile.of(tile).getTexturePath());
     }
 

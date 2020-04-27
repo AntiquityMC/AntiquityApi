@@ -5,7 +5,9 @@
   "compatibilityLevel": "JAVA_8",
   "plugin": "io.github.juuxel.antiquity.mixin.AntiquityMixinPlugin",
   "mixins": [
+    "bugfix.GlassTileMixin",
     "bugfix.MinecraftAppletMixin",
+    "bugfix.TransparentTileMixin",
     "misc.SurvivalModeMixin",
     "rendering.BlockParticleMixin",
     "rendering.FlowerTileMixin",
