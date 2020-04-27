@@ -54,7 +54,9 @@ public enum TerrainAtlasImpl implements TerrainAtlas {
 
         for (Tile tile : Tile.tiles) {
             if (tile == null) continue;
-            INSTANCE.add(ExtendedTile.of(tile).getTexturePath());
+            for (String texture : ExtendedTile.of(tile).getAllTextures()) {
+                INSTANCE.add(texture);
+            }
         }
 
         LOGGER.info("Stitching terrain atlas from {} entries", paths.size());

@@ -2,6 +2,9 @@ package io.github.juuxel.antiquity.api.tile;
 
 import com.mojang.minecraft.level.tile.Tile;
 
+import java.util.Collection;
+import java.util.Collections;
+
 /**
  * An interface implemented on all tiles.
  */
@@ -10,6 +13,8 @@ public interface ExtendedTile {
 
     /**
      * Gets the path of this tile's texture.
+     *
+     * <p>This texture is used for particles, and by default for the sided {@link #getTexturePath(int) getTexturePath()}.
      *
      * <p>Returns {@link #DEFAULT_TEXTURE} by default.
      *
@@ -39,6 +44,18 @@ public interface ExtendedTile {
      */
     default String getTexturePath(int side) {
         return getTexturePath();
+    }
+
+    /**
+     * Returns all textures used by this tile.
+     * Used for atlas stitching.
+     *
+     * <p>Returns a singleton set of {@link #getTexturePath()} by default.
+     *
+     * @return the collection of all textures used by this tile
+     */
+    default Collection<String> getAllTextures() {
+        return Collections.singleton(getTexturePath());
     }
 
     /**
