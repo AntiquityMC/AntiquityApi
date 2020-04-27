@@ -12,8 +12,8 @@ public abstract class MinecraftAppletMixin {
     @Shadow
     public abstract void startGameThread();
 
-    @Inject(method = "start", at = @At("HEAD"))
-    private void antiquity_onStart(CallbackInfo ci) {
+    @Inject(method = "init", at = @At("RETURN"))
+    private void antiquity_onInit(CallbackInfo info) {
         startGameThread();
     }
 }

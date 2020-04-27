@@ -1,5 +1,7 @@
 package io.github.juuxel.antiquity.mixin;
 
+import net.fabricmc.loader.api.FabricLoader;
+import net.fabricmc.loader.api.MappingResolver;
 import org.spongepowered.asm.lib.MethodVisitor;
 import org.spongepowered.asm.lib.Opcodes;
 import org.spongepowered.asm.lib.tree.ClassNode;
@@ -13,11 +15,15 @@ public final class AntiquityMixinPlugin implements IMixinConfigPlugin {
     @Override
     public void preApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {
         if (mixinClassName.endsWith("SurvivalModeMixin")) {
-            String superClassName = targetClassName.equals("com/mojang/minecraft/class_91") ? "com/mojang/minecraft/class_90" : "com/mojang/minecraft/gamemode/GameMode";
-            MethodVisitor mv = targetClass.visitMethod(Opcodes.ACC_PUBLIC, "<init>", "(Lcom/mojang/minecraft/Minecraft;)V", null, null);
+            MappingResolver mappingResolver = FabricLoader.getInstance().getMappingResolver();
+            String superClassName = mappingResolver.mapClassName("intermediary", "com.mojang.minecraft.class_90").replace('.', '/');
+            String minecraft = mappingResolver.mapClassName("intermediary", "com.mojang.minecraft.Minecraft").replace('.', '/');
+            String descriptor = "(L" + minecraft + ";)V";
+
+            MethodVisitor mv = targetClass.visitMethod(Opcodes.ACC_PUBLIC, "<init>", descriptor, null, null);
             mv.visitVarInsn(Opcodes.ALOAD, 0);
             mv.visitVarInsn(Opcodes.ALOAD, 1);
-            mv.visitMethodInsn(Opcodes.INVOKESPECIAL, superClassName, "<init>", "(Lcom/mojang/minecraft/Minecraft;)V", false);
+            mv.visitMethodInsn(Opcodes.INVOKESPECIAL, superClassName, "<init>", descriptor, false);
             mv.visitInsn(Opcodes.RETURN);
             mv.visitMaxs(2, 0);
         }

@@ -16,7 +16,7 @@ abstract class TileMixin implements ExtendedTile {
     private int antiquity_method_421_cachedSide;
 
     @Inject(method = "method_421", at = @At("HEAD"))
-    private void antiquity_onMethod_421(Tesselator arg, int x, int y, int z, int side, int tex, CallbackInfo ci) {
+    private void antiquity_onMethod_421(Tesselator arg, int x, int y, int z, int side, int tex, CallbackInfo info) {
         this.antiquity_method_421_cachedSide = side;
     }
 
