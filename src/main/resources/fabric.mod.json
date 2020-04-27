@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "id": "antiquity_api",
+  "id": "antiquity",
   "version": "${version}",
 
   "name": "Antiquity API",
