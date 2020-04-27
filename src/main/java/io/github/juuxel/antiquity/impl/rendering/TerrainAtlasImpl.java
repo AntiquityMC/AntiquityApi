@@ -78,7 +78,7 @@ public enum TerrainAtlasImpl implements TerrainAtlas {
 
         int y = 0;
         for (BufferedImage image : images) {
-            graphics.drawImage(image, 0, y, 256, image.getHeight(), null);
+            graphics.drawImage(image, 0, y, null);
             y += image.getHeight();
         }
 
