@@ -17,8 +17,8 @@ dependencies {
 	//to change the versions see the gradle.properties file
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
 
-	mappings loom.fromCommit("Juuxel/PotentialLamp", project.mappings) { spec ->
-		spec.version = project.mappings
+	mappings loom.fromCommit("Juuxel/PotentialLamp", "0.30_01c-$project.mappings_build") { spec ->
+		spec.version = "$project.minecraft_version-$project.mappings_build"
 	}
 
 	modImplementation"net.fabricmc:fabric-loader:${project.loader_version}" 
