@@ -48,7 +48,6 @@ public enum TerrainAtlasImpl implements TerrainAtlas {
         return atlasHeight;
     }
 
-
     public static BufferedImage stitch() throws IOException {
         LOGGER.info("Scanning terrain atlas inputs from tiles");
 
@@ -89,6 +88,7 @@ public enum TerrainAtlasImpl implements TerrainAtlas {
         return result;
     }
 
+    // TODO: into API
     public static int getTextureOffset(String texture) {
         return textureOffsets.get(texture);
     }

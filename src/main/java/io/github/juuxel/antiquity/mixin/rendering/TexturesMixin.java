@@ -21,7 +21,7 @@ import java.nio.ByteBuffer;
 @Mixin(Textures.class)
 abstract class TexturesMixin {
     @Shadow
-    public ByteBuffer field_422;
+    public ByteBuffer textureBuffer;
 
     @Unique
     private static ByteBuffer antiquity_cachedBuffer;
@@ -36,14 +36,14 @@ abstract class TexturesMixin {
         }
     }
 
-    @Redirect(method = "method_266", at = @At(value = "INVOKE", target = "Ljava/nio/ByteBuffer;put([B)Ljava/nio/ByteBuffer;"))
+    @Redirect(method = "putTexture", at = @At(value = "INVOKE", target = "Ljava/nio/ByteBuffer;put([B)Ljava/nio/ByteBuffer;"))
     private ByteBuffer antiquity_checkBuffer(ByteBuffer buf, byte[] bytes) {
         try {
             return buf.put(bytes);
         } catch (BufferOverflowException e) {
             antiquity_cachedBuffer = buf;
-            this.field_422 = BufferUtils.createByteBuffer(bytes.length);
-            return field_422.put(bytes);
+            this.textureBuffer = BufferUtils.createByteBuffer(bytes.length);
+            return textureBuffer.put(bytes);
         }
     }
 
@@ -52,7 +52,7 @@ abstract class TexturesMixin {
         antiquity_restoreBuffer();
     }
 
-    @Inject(method = "method_268", at = @At("RETURN"))
+    @Inject(method = "addTexture", at = @At("RETURN"))
     private void antiquity_restoreBuffer(BufferedImage image, CallbackInfoReturnable<Integer> info) {
         antiquity_restoreBuffer();
     }
@@ -60,7 +60,7 @@ abstract class TexturesMixin {
     @Unique
     private void antiquity_restoreBuffer() {
         if (antiquity_cachedBuffer != null) {
-            this.field_422 = antiquity_cachedBuffer;
+            this.textureBuffer = antiquity_cachedBuffer;
             antiquity_cachedBuffer = null;
         }
     }
