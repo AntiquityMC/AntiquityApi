@@ -8,6 +8,7 @@
     "bugfix.GlassTileMixin",
     "bugfix.MinecraftAppletMixin",
     "bugfix.TransparentTileMixin",
+    "core.MinecraftMixin",
     "misc.SurvivalModeMixin",
     "rendering.BlockParticleMixin",
     "rendering.FlowerTileMixin",
@@ -15,6 +16,7 @@
     "rendering.TexturesMixin",
     "rendering.TileAccessor",
     "rendering.TileMixin",
+    "tile.MinecraftMixin",
     "tile.TileMixin"
   ],
   "injectors": {
