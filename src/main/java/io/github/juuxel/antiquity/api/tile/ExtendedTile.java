@@ -21,9 +21,19 @@ public interface ExtendedTile {
         return false;
     }
 
-    TileState getDefaultState();
+    // TODO: JD
+    default void onPlaced(Level level, int x, int y, int z, Player player) {}
 
-    TileStateManager getStateManager();
+    default TileState getDefaultState() {
+        return getStateManager().getDefaultState();
+    }
+
+    default TileStateManager getStateManager() {
+        throw new IllegalStateException("Dummy implementation of ExtendedTile.getStateManager() called!");
+    }
+
+    // TODO: JD
+    default void appendProperties(TileStateManager.Builder builder) {}
 
     default Texture getParticleTexture() {
         return new Texture(getTexturePath(), ((Tile) this).tex);

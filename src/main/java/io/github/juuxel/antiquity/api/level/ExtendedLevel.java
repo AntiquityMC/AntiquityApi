@@ -11,7 +11,7 @@ public interface ExtendedLevel {
 
     void setTileState(int x, int y, int z, TileState state);
 
-    void setTileStateNoUpdate(int x, int y, int z, TileState state);
+    void setTileStateNoNeighborChange(int x, int y, int z, TileState state);
 
     static ExtendedLevel of(Level level) {
         return (ExtendedLevel) level;

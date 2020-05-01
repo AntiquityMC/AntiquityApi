@@ -79,7 +79,7 @@ public final class TileStateManager {
             this.tile = tile;
         }
 
-        public Builder addProperties(Property<?>... properties) {
+        public Builder add(Property<?>... properties) {
             Objects.requireNonNull(properties, "properties");
 
             for (Property<?> property : properties) {
@@ -99,7 +99,7 @@ public final class TileStateManager {
             return this;
         }
 
-        public <T> Builder addProperty(Property<T> property, T defaultValue) {
+        public <T> Builder add(Property<T> property, T defaultValue) {
             Objects.requireNonNull(property, "property");
             Objects.requireNonNull(defaultValue, "defaultValue");
 

@@ -24,6 +24,10 @@ public final class TileState {
         return manager.hasProperty(property);
     }
 
+    public @Nullable Tile getTile() {
+        return tile;
+    }
+
     @SuppressWarnings("unchecked")
     public <T> T get(Property<T> property) {
         if (!hasProperty(property)) {

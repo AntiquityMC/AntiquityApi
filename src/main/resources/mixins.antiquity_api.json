@@ -9,6 +9,7 @@
     "bugfix.MinecraftAppletMixin",
     "bugfix.TransparentTileMixin",
     "core.MinecraftMixin",
+    "level.LevelMixin",
     "misc.SurvivalModeMixin",
     "rendering.BlockParticleMixin",
     "rendering.FlowerTileMixin",

@@ -1,5 +1,10 @@
 package io.github.juuxel.antiquity.api.tile;
 
+import com.mojang.minecraft.player.Player;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.Locale;
+
 /**
  * The direction enum represents all sides of a tile.
  *
@@ -39,6 +44,67 @@ public enum Direction {
 
     public Axis getAxis() {
         return axis;
+    }
+
+    /**
+     * Gets the horizontal direction where the player is looking.
+     *
+     * @param player the player
+     * @return the direction
+     */
+    public static Direction of(Player player) {
+        float rotation = player.yRot % 360;
+        if (rotation < 0) rotation += 360;
+        int rotationIndex = Math.round(rotation / 90) % 4;
+
+        Direction result;
+        switch (rotationIndex) {
+            case 0:
+                result = NORTH;
+                break;
+            case 1:
+                result = EAST;
+                break;
+            case 2:
+                result = SOUTH;
+                break;
+            case 3:
+            default:
+                result = WEST;
+                break;
+        }
+
+        return result;
+    }
+
+    /**
+     * Converts a string into a direction.
+     *
+     * @param string the string form of a direction
+     * @return the direction value or null if not found
+     */
+    public static @Nullable Direction of(String string) {
+        switch (string.toLowerCase(Locale.ROOT)) {
+            case "north":
+                return NORTH;
+            case "east":
+                return EAST;
+            case "south":
+                return SOUTH;
+            case "west":
+                return WEST;
+            case "up":
+                return UP;
+            case "down":
+                return DOWN;
+            default:
+                return null;
+        }
+    }
+
+    @Override
+    public String toString() {
+        return name().toLowerCase(Locale.ROOT);
     }
 
     public enum Axis {
