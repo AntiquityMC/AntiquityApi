@@ -6,6 +6,7 @@ import com.google.common.collect.ImmutableSet;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.mojang.minecraft.phys.AABB;
 import com.mojang.minecraft.renderer.Tesselator;
 import io.github.juuxel.antiquity.api.rendering.TerrainAtlas;
 import io.github.juuxel.antiquity.api.rendering.Texture;
@@ -220,6 +221,14 @@ public final class Model {
             JsonArray to = json.getAsJsonArray("to");
             checkPositionArray("to", to);
 
+            float minX = from.get(0).getAsFloat();
+            float minY = from.get(1).getAsFloat();
+            float minZ = from.get(2).getAsFloat();
+            float maxX = to.get(0).getAsFloat();
+            float maxY = to.get(1).getAsFloat();
+            float maxZ = to.get(2).getAsFloat();
+            AABB bb = new AABB(minX, minY, minZ, maxX, maxY, maxZ);
+
             Map<Direction, Face> faces;
 
             if (json.has("faces")) {
@@ -227,19 +236,15 @@ public final class Model {
 
                 for (Map.Entry<String, JsonElement> entry : json.getAsJsonObject("faces").entrySet()) {
                     Direction direction = Direction.valueOf(entry.getKey().toUpperCase(Locale.ROOT));
-                    faces.put(direction, Face.fromJson(entry.getValue().getAsJsonObject()));
+                    faces.put(direction, Face.fromJson(direction, bb, entry.getValue().getAsJsonObject()));
                 }
             } else {
                 faces = ImmutableMap.of();
             }
 
             return new Element(
-                    from.get(0).getAsFloat(),
-                    from.get(1).getAsFloat(),
-                    from.get(2).getAsFloat(),
-                    to.get(0).getAsFloat(),
-                    to.get(1).getAsFloat(),
-                    to.get(2).getAsFloat(),
+                    minX, minY, minZ,
+                    maxX, maxY, maxZ,
                     faces
             );
         }
@@ -277,7 +282,7 @@ public final class Model {
             return Objects.hash(texture, cull);
         }
 
-        public static Face fromJson(JsonObject json) {
+        public static Face fromJson(Direction side, AABB bb, JsonObject json) {
             String texture = json.getAsJsonPrimitive("texture").getAsString();
 
             if (!texture.startsWith("#")) {
@@ -294,15 +299,44 @@ public final class Model {
                 }
 
                 u0 = uv.get(0).getAsFloat();
-                u1 = uv.get(1).getAsFloat();
-                v0 = uv.get(2).getAsFloat();
+                v0 = uv.get(1).getAsFloat();
+                u1 = uv.get(2).getAsFloat();
                 v1 = uv.get(3).getAsFloat();
             } else {
-                // TODO: UV calculation
-                u0 = 0;
-                u1 = 16;
-                v0 = 0;
-                v1 = 16;
+                switch (side) {
+                    case NORTH:
+                        u0 = bb.x1;
+                        u1 = bb.x0;
+                        v0 = bb.y0;
+                        v1 = bb.y1;
+                        break;
+                    case SOUTH:
+                        u0 = bb.x0;
+                        u1 = bb.x1;
+                        v0 = bb.y0;
+                        v1 = bb.y1;
+                        break;
+                    case WEST:
+                        u0 = bb.z0;
+                        u1 = bb.z1;
+                        v0 = bb.y0;
+                        v1 = bb.y1;
+                        break;
+                    case EAST:
+                        u0 = bb.z1;
+                        u1 = bb.z0;
+                        v0 = bb.y0;
+                        v1 = bb.y1;
+                        break;
+                    case UP:
+                    case DOWN:
+                    default:
+                        u0 = bb.x0;
+                        u1 = bb.x1;
+                        v0 = bb.z0;
+                        v1 = bb.z1;
+                        break;
+                }
             }
 
             return json.has("cull")

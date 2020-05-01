@@ -21,7 +21,7 @@ abstract class FlowerTileMixin extends Tile implements ExtendedTile {
      * @reason Can't inject cleanly due to LVT issues
      */
     @Overwrite
-    private void method_443(Tesselator t, float x, float y0, float z) {
+    private void render(Tesselator t, float x, float y0, float z) {
         int texture = this.getTextureForSide(15) + TerrainAtlasImpl.getTextureOffset(getTexturePath());
         int textureX = texture % 16 << 4;
         int textureY = texture / 16 << 4;
