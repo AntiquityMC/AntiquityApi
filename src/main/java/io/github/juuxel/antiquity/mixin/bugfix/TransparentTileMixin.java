@@ -9,15 +9,15 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 /**
  * Makes the boolean parameter in the constructor actually used,
- * as it's supposed to be the value of field_753.
+ * as it's supposed to be the value of renderAdjacentFaces.
  */
 @Mixin(TransparentTile.class)
 abstract class TransparentTileMixin {
     @Shadow
-    private boolean field_753;
+    private boolean renderAdjacentFaces;
 
     @Inject(method = "<init>", at = @At("RETURN"))
     private void antiquity_onConstruct(int id, int tex, boolean renderAdjacentFaces, CallbackInfo info) {
-        field_753 = renderAdjacentFaces;
+        this.renderAdjacentFaces = renderAdjacentFaces;
     }
 }
