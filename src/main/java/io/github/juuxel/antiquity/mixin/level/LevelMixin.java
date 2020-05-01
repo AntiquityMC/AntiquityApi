@@ -52,15 +52,13 @@ abstract class LevelMixin implements ExtendedLevel {
 
     @Override
     public void setTileState(int x, int y, int z, TileState state) {
-        Tile tile = state.getTile();
-        setTile(x, y, z, tile != null ? tile.id : 0);
+        setTile(x, y, z, state.getTileId());
         antiquity_tileStates[(y * depth + z) * width + x] = state;
     }
 
     @Override
     public void setTileStateNoNeighborChange(int x, int y, int z, TileState state) {
-        Tile tile = state.getTile();
-        setTileNoNeighborChange(x, y, z, tile != null ? tile.id : 0);
+        setTileNoNeighborChange(x, y, z, state.getTileId());
         antiquity_tileStates[(y * depth + z) * width + x] = state;
     }
 }

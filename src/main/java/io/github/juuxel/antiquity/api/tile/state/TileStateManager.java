@@ -69,6 +69,14 @@ public final class TileStateManager {
         return properties.containsValue(property);
     }
 
+    public boolean hasProperty(String name) {
+        return properties.containsKey(name);
+    }
+
+    public @Nullable Property<?> getProperty(String name) {
+        return properties.get(name);
+    }
+
     public static final class Builder {
         private static final String PROPERTY_NAME_REGEX = "^[a-z0-9_]+$";
         private final @Nullable Tile tile;

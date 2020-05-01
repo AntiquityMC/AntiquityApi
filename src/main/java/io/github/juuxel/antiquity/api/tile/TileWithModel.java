@@ -3,12 +3,16 @@ package io.github.juuxel.antiquity.api.tile;
 import com.mojang.minecraft.level.Level;
 import com.mojang.minecraft.level.tile.Tile;
 import com.mojang.minecraft.renderer.Tesselator;
+import io.github.juuxel.antiquity.api.level.ExtendedLevel;
 import io.github.juuxel.antiquity.api.rendering.Texture;
 import io.github.juuxel.antiquity.api.rendering.model.Model;
 import io.github.juuxel.antiquity.api.rendering.model.ModelLoader;
+import io.github.juuxel.antiquity.api.tile.state.TileState;
 import io.github.juuxel.antiquity.api.util.Identifier;
 
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 public class TileWithModel extends Tile implements ExtendedTile {
     private final Identifier modelId;
@@ -23,23 +27,29 @@ public class TileWithModel extends Tile implements ExtendedTile {
         this.modelId = modelId;
     }
 
-    public Model getModel() {
-        return ModelLoader.getModel(modelId);
+    public Model getModel(TileState state) {
+        return ModelLoader.getTileModel(modelId, state);
     }
 
     @Override
     public Collection<String> getAllTextures() {
-        return getModel().getResolvedTextures();
+        Set<String> textures = new HashSet<>();
+
+        for (Model model : ModelLoader.getAllTileModels(modelId, this)) {
+            textures.addAll(model.getResolvedTextures());
+        }
+
+        return textures;
     }
 
     @Override
     public Texture getParticleTexture() {
-        return getModel().resolveTexture("#particle");
+        return getModel(getDefaultState()).resolveTexture("#particle");
     }
 
     @Override
     public void renderFace(Tesselator tesselator, int x, int y, int z, int face) {
-        renderFace(tesselator, x, y, z, Direction.values()[face], false);
+        renderFace(tesselator, x, y, z, getDefaultState(), Direction.values()[face], false);
     }
 
     @Override
@@ -75,13 +85,13 @@ public class TileWithModel extends Tile implements ExtendedTile {
             }
 
             tesselator.color(brightness * brightnessModifier, brightness * brightnessModifier, brightness * brightnessModifier);
-            rendered |= renderFace(tesselator, x, y, z, face, shouldCull);
+            rendered |= renderFace(tesselator, x, y, z, ExtendedLevel.of(level).getTileState(x, y, z), face, shouldCull);
         }
 
         return rendered;
     }
 
-    private boolean renderFace(Tesselator tesselator, int x, int y, int z, Direction face, boolean shouldCull) {
-        return getModel().render(tesselator, x, y, z, face, shouldCull);
+    private boolean renderFace(Tesselator tesselator, int x, int y, int z, TileState state, Direction face, boolean shouldCull) {
+        return getModel(state).render(tesselator, x, y, z, face, shouldCull);
     }
 }

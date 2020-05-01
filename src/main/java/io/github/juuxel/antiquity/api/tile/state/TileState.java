@@ -20,12 +20,24 @@ public final class TileState {
         this.properties = properties;
     }
 
+    public TileStateManager getManager() {
+        return manager;
+    }
+
     public boolean hasProperty(Property<?> property) {
         return manager.hasProperty(property);
     }
 
+    public boolean hasProperty(String name) {
+        return manager.hasProperty(name);
+    }
+
     public @Nullable Tile getTile() {
         return tile;
+    }
+
+    public int getTileId() {
+        return tile != null ? tile.id : 0;
     }
 
     @SuppressWarnings("unchecked")

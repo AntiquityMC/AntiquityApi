@@ -46,6 +46,24 @@ public enum Direction {
         return axis;
     }
 
+    public Direction getOpposite() {
+        switch (this) {
+            case DOWN:
+                return UP;
+            case UP:
+                return DOWN;
+            case NORTH:
+                return SOUTH;
+            case SOUTH:
+                return NORTH;
+            case WEST:
+                return EAST;
+            case EAST:
+            default:
+                return WEST;
+        }
+    }
+
     /**
      * Gets the horizontal direction where the player is looking.
      *
