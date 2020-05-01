@@ -36,15 +36,15 @@ abstract class MinecraftMixin {
             int z = hitResult.z;
             Tile tile = Tile.tiles[level.getTile(x, y, z)];
             if (ExtendedTile.of(tile).use(level, x, y, z, Direction.values()[hitResult.f], player)) {
-                field_644.field_441.field_463 = true;
+                field_644.field_441.handSwinging = true;
                 info.cancel();
             }
         }
     }
 
-    @Redirect(method = "handleMouseClick", at = @At(value = "INVOKE", target = "Lcom/mojang/minecraft/level/tile/Tile;method_428(Lcom/mojang/minecraft/level/Level;III)V"))
+    @Redirect(method = "handleMouseClick", at = @At(value = "INVOKE", target = "Lcom/mojang/minecraft/level/tile/Tile;onPlaced(Lcom/mojang/minecraft/level/Level;III)V"))
     private void antiquity_onOnPlaced(Tile tile, Level level, int x, int y, int z) {
-        tile.method_428(level, x, y, z);
+        tile.onPlaced(level, x, y, z);
         ExtendedTile.of(tile).onPlaced(level, x, y, z, player);
     }
 }
