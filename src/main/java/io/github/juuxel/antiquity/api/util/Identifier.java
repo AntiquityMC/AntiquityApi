@@ -3,8 +3,8 @@ package io.github.juuxel.antiquity.api.util;
 import java.util.Objects;
 
 public final class Identifier {
-    private static final String NAMESPACE_REGEX = "[a-z0-9-_]+";
-    private static final String PATH_REGEX = "[a-z0-9-_./]+";
+    private static final String NAMESPACE_REGEX = "^[a-z0-9-_]+$";
+    private static final String PATH_REGEX = "^[a-z0-9-_./]+$";
 
     private final String namespace;
     private final String path;

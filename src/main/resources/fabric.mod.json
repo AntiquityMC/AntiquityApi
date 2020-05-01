@@ -15,6 +15,9 @@
   "license": "MIT",
 
   "environment": "*",
+  "entrypoints": {
+    "main": ["io.github.juuxel.antiquity.impl.Test"]
+  },
   "mixins": [
     "mixins.antiquity_api.json"
   ],

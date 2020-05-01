@@ -2,6 +2,8 @@ package io.github.juuxel.antiquity.api.tile;
 
 import com.mojang.minecraft.level.tile.Tile;
 import io.github.juuxel.antiquity.api.rendering.Texture;
+import io.github.juuxel.antiquity.api.tile.state.TileState;
+import io.github.juuxel.antiquity.api.tile.state.TileStateManager;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -11,6 +13,10 @@ import java.util.Collections;
  */
 public interface ExtendedTile {
     String DEFAULT_TEXTURE = "/terrain.png";
+
+    TileState getDefaultState();
+
+    TileStateManager getStateManager();
 
     default Texture getParticleTexture() {
         return new Texture(getTexturePath(), ((Tile) this).tex);

@@ -21,7 +21,7 @@ dependencies {
 		spec.version = "$project.minecraft_version-$project.mappings_build"
 	}
 
-	modImplementation"net.fabricmc:fabric-loader:${project.loader_version}" 
+	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 	modImplementation("net.fabricmc.fabric-api:fabric-api-base:$project.api_base_version") {
 		exclude group: "net.fabricmc", module: "fabric-loader"
 	}
