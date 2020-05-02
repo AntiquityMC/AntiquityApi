@@ -41,7 +41,7 @@ public final class TileState {
     }
 
     @SuppressWarnings("unchecked")
-    public <T> T get(Property<T> property) {
+    public <T extends Comparable<T>> T get(Property<T> property) {
         if (!hasProperty(property)) {
             throw new IllegalArgumentException("State " + this + " does not contain property '" + property.getName() + "'!");
         }
@@ -49,7 +49,7 @@ public final class TileState {
         return (T) properties.get(property);
     }
 
-    public <T> TileState with(Property<T> property, T value) {
+    public <T extends Comparable<T>> TileState with(Property<T> property, T value) {
         if (!property.getValues().contains(value)) {
             throw new IllegalArgumentException("Property '" + property.getName() + "' does not have value '" + value + "'!");
         }
@@ -89,7 +89,7 @@ public final class TileState {
         return toString(true);
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unchecked", "rawtypes"})
     public String toString(boolean includeId) {
         StringBuilder builder = new StringBuilder();
 
@@ -107,10 +107,10 @@ public final class TileState {
                 first = false;
             }
 
-            Property<Object> property = (Property<Object>) entry.getKey();
+            Property property = (Property) entry.getKey();
             builder.append(property.getName());
             builder.append('=');
-            builder.append(property.serialize(entry.getValue()));
+            builder.append(property.serialize((Comparable) entry.getValue()));
         }
 
         builder.append(']');

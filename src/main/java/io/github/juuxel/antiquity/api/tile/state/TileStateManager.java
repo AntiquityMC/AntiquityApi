@@ -87,6 +87,7 @@ public final class TileStateManager {
             this.tile = tile;
         }
 
+        @SuppressWarnings({"rawtypes", "unchecked"})
         public Builder add(Property<?>... properties) {
             Objects.requireNonNull(properties, "properties");
 
@@ -100,14 +101,15 @@ public final class TileStateManager {
                 }
 
                 this.properties.put(property.getName(), property);
-                Iterator<?> values = property.getValues().iterator();
-                defaultValues.put(property, values.next());
+                ArrayList<Comparable> values = new ArrayList<>(property.getValues());
+                values.sort(Comparator.naturalOrder());
+                defaultValues.put(property, values.get(0));
             }
 
             return this;
         }
 
-        public <T> Builder add(Property<T> property, T defaultValue) {
+        public <T extends Comparable<T>> Builder add(Property<T> property, T defaultValue) {
             Objects.requireNonNull(property, "property");
             Objects.requireNonNull(defaultValue, "defaultValue");
 
