@@ -3,6 +3,7 @@ package io.github.juuxel.antiquity.api.tile.state;
 import com.google.common.collect.ImmutableSet;
 import io.github.juuxel.antiquity.api.tile.Direction;
 
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
@@ -11,8 +12,8 @@ public final class DirectionProperty implements Property<Direction> {
     private final Set<Direction> values;
 
     private DirectionProperty(String name, Set<Direction> values) {
-        this.name = name;
-        this.values = values;
+        this.name = Objects.requireNonNull(name, "name");
+        this.values = Objects.requireNonNull(values, "values");
     }
 
     public static DirectionProperty of(String name) {
