@@ -1,23 +1,26 @@
 package io.github.juuxel.antiquity.api.tile.state;
 
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSortedMap;
 import com.mojang.minecraft.level.tile.Tile;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Comparator;
 import java.util.Map;
 import java.util.Objects;
+import java.util.SortedMap;
 
-public final class TileState {
+public final class TileState implements Comparable<TileState> {
     public static final TileState AIR = new TileState(null, new TileStateManager.Builder(null).build(), ImmutableMap.of());
 
     private final @Nullable Tile tile;
     private final TileStateManager manager;
-    private final Map<Property<?>, Object> properties;
+    private final SortedMap<Property<?>, Object> properties;
 
     TileState(@Nullable Tile tile, TileStateManager manager, Map<Property<?>, Object> properties) {
         this.tile = tile;
         this.manager = manager;
-        this.properties = properties;
+        this.properties = ImmutableSortedMap.copyOf(properties, Comparator.comparing(Property::getName));
     }
 
     public TileStateManager getManager() {
@@ -107,7 +110,7 @@ public final class TileState {
                 first = false;
             }
 
-            Property property = (Property) entry.getKey();
+            Property property = entry.getKey();
             builder.append(property.getName());
             builder.append('=');
             builder.append(property.serialize((Comparable) entry.getValue()));
@@ -116,5 +119,23 @@ public final class TileState {
         builder.append(']');
 
         return builder.toString();
+    }
+
+    @SuppressWarnings({"rawtypes", "unchecked", "RedundantCast"})
+    @Override
+    public int compareTo(TileState o) {
+        if (tile != o.tile) {
+            return Integer.compare(getTileId(), o.getTileId());
+        }
+
+        for (Property<?> property : properties.keySet()) {
+            int comparison = ((Comparable) get(property)).compareTo(o.get(property));
+
+            if (comparison != 0) {
+                return comparison;
+            }
+        }
+
+        return 0;
     }
 }

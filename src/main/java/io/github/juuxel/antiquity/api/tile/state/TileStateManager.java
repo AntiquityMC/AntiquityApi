@@ -55,6 +55,10 @@ public final class TileStateManager {
 
         states = stateBuilder.build();
         this.defaultState = defaultState;
+
+        if (states.size() > 256) {
+            throw new IllegalStateException("The maximum amount of tile states for one tile is 256, found " + states.size() + "!");
+        }
     }
 
     public TileState getDefaultState() {
