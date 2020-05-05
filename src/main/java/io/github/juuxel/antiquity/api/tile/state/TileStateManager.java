@@ -1,7 +1,9 @@
 package io.github.juuxel.antiquity.api.tile.state;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.ImmutableSortedSet;
 import com.google.common.collect.Sets;
 import com.mojang.minecraft.level.tile.Tile;
 import io.github.juuxel.antiquity.api.util.Pair;
@@ -10,8 +12,10 @@ import org.jetbrains.annotations.Nullable;
 import java.util.*;
 
 public final class TileStateManager {
+    private static final int MAX_STATES = Byte.MAX_VALUE;
     private final Map<String, Property<?>> properties;
     private final Set<TileState> states;
+    private final List<TileState> indexedStates;
     private final TileState defaultState;
 
     private TileStateManager(Builder builder) {
@@ -27,7 +31,7 @@ public final class TileStateManager {
         }
 
         Set<List<Pair<Property<?>, Object>>> product = Sets.cartesianProduct(propertyValues);
-        ImmutableSet.Builder<TileState> stateBuilder = ImmutableSet.builder();
+        ImmutableSortedSet.Builder<TileState> stateBuilder = ImmutableSortedSet.naturalOrder();
 
         TileState defaultState = null;
 
@@ -56,9 +60,11 @@ public final class TileStateManager {
         states = stateBuilder.build();
         this.defaultState = defaultState;
 
-        if (states.size() > 256) {
-            throw new IllegalStateException("The maximum amount of tile states for one tile is 256, found " + states.size() + "!");
+        if (states.size() > MAX_STATES) {
+            throw new IllegalStateException("The maximum amount of tile states for one tile is " + MAX_STATES + ", found " + states.size() + "!");
         }
+
+        this.indexedStates = ImmutableList.copyOf(states);
     }
 
     public TileState getDefaultState() {
@@ -79,6 +85,14 @@ public final class TileStateManager {
 
     public @Nullable Property<?> getProperty(String name) {
         return properties.get(name);
+    }
+
+    public TileState getTileState(byte id) {
+        return indexedStates.get(id);
+    }
+
+    public byte indexOf(TileState state) {
+        return (byte) indexedStates.indexOf(state);
     }
 
     public static final class Builder {

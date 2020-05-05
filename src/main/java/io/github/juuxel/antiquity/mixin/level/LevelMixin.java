@@ -2,9 +2,9 @@ package io.github.juuxel.antiquity.mixin.level;
 
 import com.mojang.minecraft.level.Level;
 import com.mojang.minecraft.level.tile.Tile;
-import io.github.juuxel.antiquity.api.level.ExtendedLevel;
 import io.github.juuxel.antiquity.api.tile.ExtendedTile;
 import io.github.juuxel.antiquity.api.tile.state.TileState;
+import io.github.juuxel.antiquity.impl.level.InternalExtendedLevel;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Level.class)
-abstract class LevelMixin implements ExtendedLevel {
+abstract class LevelMixin implements InternalExtendedLevel {
     @Shadow
     public int width;
 
@@ -28,6 +28,9 @@ abstract class LevelMixin implements ExtendedLevel {
 
     @Shadow
     public abstract boolean setTile(int x, int y, int z, int tile);
+
+    @Shadow
+    public byte[] blocks;
 
     @Unique
     private TileState[] antiquity_tileStates;
@@ -60,5 +63,20 @@ abstract class LevelMixin implements ExtendedLevel {
     public void setTileStateNoNeighborChange(int x, int y, int z, TileState state) {
         setTileNoNeighborChange(x, y, z, state.getTileId());
         antiquity_tileStates[(y * depth + z) * width + x] = state;
+    }
+
+    @Override
+    public void setRawTileState(int position, byte state) {
+        byte tileId = blocks[position];
+        if (tileId == 0) return;
+
+        Tile tile = Tile.tiles[tileId];
+        TileState stateValue = ExtendedTile.of(tile).getStateManager().getTileState(state);
+        antiquity_tileStates[position] = stateValue;
+    }
+
+    @Override
+    public TileState[] getRawStates() {
+        return antiquity_tileStates;
     }
 }
