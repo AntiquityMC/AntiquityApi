@@ -1,5 +1,6 @@
 package io.github.juuxel.antiquity.api.util;
 
+import java.util.Map;
 import java.util.Objects;
 
 public final class Pair<A, B> {
@@ -9,6 +10,10 @@ public final class Pair<A, B> {
     public Pair(A first, B second) {
         this.first = first;
         this.second = second;
+    }
+
+    public Pair(Map.Entry<? extends A, ? extends B> entry) {
+        this(entry.getKey(), entry.getValue());
     }
 
     public A getFirst() {
