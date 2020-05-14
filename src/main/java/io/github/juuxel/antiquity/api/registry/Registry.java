@@ -2,12 +2,12 @@ package io.github.juuxel.antiquity.api.registry;
 
 import com.mojang.minecraft.level.tile.Tile;
 import io.github.juuxel.antiquity.api.util.Identifier;
-import io.github.juuxel.antiquity.api.util.Pair;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Map;
 import java.util.function.BiConsumer;
 
-public interface Registry<T> extends Iterable<Pair<Identifier, T>> {
+public interface Registry<T> extends Iterable<Map.Entry<Identifier, T>> {
     // TODO: Add vanilla entries?
     Registry<Tile> TILE = new ArrayRegistry<>(Tile.tiles, 50);
 
@@ -76,8 +76,8 @@ public interface Registry<T> extends Iterable<Pair<Identifier, T>> {
     void addRegistrationListener(RegistrationListener<? super T> listener);
 
     default void forEach(BiConsumer<? super Identifier, ? super T> consumer) {
-        for (Pair<Identifier, T> pair : this) {
-            consumer.accept(pair.getFirst(), pair.getSecond());
+        for (Map.Entry<Identifier, T> entry : this) {
+            consumer.accept(entry.getKey(), entry.getValue());
         }
     }
 }

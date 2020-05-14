@@ -90,19 +90,7 @@ public class SimpleRegistry<T> implements Registry<T> {
 
     @NotNull
     @Override
-    public Iterator<Pair<Identifier, T>> iterator() {
-        return new Iterator<Pair<Identifier, T>>() {
-            private final Iterator<Map.Entry<Identifier, T>> delegate = entries.entrySet().iterator();
-
-            @Override
-            public boolean hasNext() {
-                return delegate.hasNext();
-            }
-
-            @Override
-            public Pair<Identifier, T> next() {
-                return new Pair<>(delegate.next());
-            }
-        };
+    public Iterator<Map.Entry<Identifier, T>> iterator() {
+        return entries.entrySet().iterator();
     }
 }
