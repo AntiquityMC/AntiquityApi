@@ -7,9 +7,11 @@ import io.github.juuxel.antiquity.api.util.Pair;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.Set;
 
 /**
  * A simple bimap-based registry implementation.
@@ -19,6 +21,8 @@ import java.util.NoSuchElementException;
 public class SimpleRegistry<T> implements Registry<T> {
     private final BiMap<Identifier, T> entries = HashBiMap.create();
     private final BiMap<Integer, T> rawEntries = HashBiMap.create();
+    private final Set<RegistrationListener<? super T>> listeners = new HashSet<>();
+
     private int nextId;
 
     public SimpleRegistry(int startingId) {
@@ -72,7 +76,16 @@ public class SimpleRegistry<T> implements Registry<T> {
         entries.put(id, entry);
         rawEntries.put(nextId++, entry);
 
+        for (RegistrationListener<? super T> listener : listeners) {
+            listener.onEntryRegistered(id, entry);
+        }
+
         return entry;
+    }
+
+    @Override
+    public void addRegistrationListener(RegistrationListener<? super T> listener) {
+        listeners.add(listener);
     }
 
     @NotNull

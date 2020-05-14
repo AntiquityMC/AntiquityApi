@@ -51,6 +51,8 @@ public interface Registry<T> extends Iterable<Pair<Identifier, T>> {
     /**
      * Registers the entry to the registry.
      *
+     * <p>This method also notifies all registration listeners for this registry.
+     *
      * @param id    the ID
      * @param entry the entry
      * @param <U>   the entry type
@@ -58,6 +60,8 @@ public interface Registry<T> extends Iterable<Pair<Identifier, T>> {
      * @throws IllegalArgumentException if the ID or the entry has already been registered
      */
     <U extends T> U register(Identifier id, U entry);
+
+    void addRegistrationListener(RegistrationListener<? super T> listener);
 
     default void forEach(BiConsumer<? super Identifier, ? super T> consumer) {
         for (Pair<Identifier, T> pair : this) {
