@@ -1,6 +1,6 @@
 plugins {
 	id 'java-library'
-	id 'fabric-loom' version '7c7c47da'
+	id 'fabric-loom' version 'd3dedd4'
 	id 'maven-publish'
 }
 
@@ -17,7 +17,7 @@ dependencies {
 	//to change the versions see the gradle.properties file
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
 
-	mappings loom.fromCommit("Juuxel/PotentialLamp", "0.30_01c-$project.mappings_build") { spec ->
+	mappings loom.fromCommit("AntiquityMC/PotentialLamp", "0.30_01c-$project.mappings_build") { spec ->
 		spec.version = "$project.minecraft_version-$project.mappings_build"
 	}
 
