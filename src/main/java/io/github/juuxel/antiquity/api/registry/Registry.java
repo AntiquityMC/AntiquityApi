@@ -8,8 +8,15 @@ import org.jetbrains.annotations.Nullable;
 import java.util.function.BiConsumer;
 
 public interface Registry<T> extends Iterable<Pair<Identifier, T>> {
+    // TODO: Add vanilla entries?
     Registry<Tile> TILE = new ArrayRegistry<>(Tile.tiles, 50);
 
+    /**
+     * Returns whether the entry is registered in this registry.
+     *
+     * @param entry the entry
+     * @return true if the entry is registered, false otherwise
+     */
     boolean contains(T entry);
 
     /**
@@ -61,6 +68,11 @@ public interface Registry<T> extends Iterable<Pair<Identifier, T>> {
      */
     <U extends T> U register(Identifier id, U entry);
 
+    /**
+     * Adds a registration listener that will be notified each time a new entry is registered.
+     *
+     * @param listener the listener
+     */
     void addRegistrationListener(RegistrationListener<? super T> listener);
 
     default void forEach(BiConsumer<? super Identifier, ? super T> consumer) {
