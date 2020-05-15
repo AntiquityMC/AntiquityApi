@@ -26,6 +26,11 @@ public final class TileModels {
         Map<TileState, Variant> variants = new HashMap<>();
         Map<String, String> properties = new HashMap<>();
 
+        // Set missingno as the default model
+        for (TileState state : states) {
+            variants.put(state, Variant.MISSINGNO);
+        }
+
         for (Map.Entry<String, JsonElement> entry : json.getAsJsonObject("variants").entrySet()) {
             String stateStr = entry.getKey();
             if (!stateStr.isEmpty()) {
@@ -74,6 +79,8 @@ public final class TileModels {
     }
 
     public static final class Variant {
+        public static final Variant MISSINGNO = new Variant(new Identifier("antiquity", "missingno"), 0, 0, false);
+
         public final Identifier model;
         public final int x; // TODO: Implement
         public final int y;

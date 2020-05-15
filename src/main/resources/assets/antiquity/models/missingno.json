@@ -1,0 +1,6 @@
+{
+  "parent": "antiquity:cube_all",
+  "textures": {
+    "all": "antiquity:missingno"
+  }
+}
