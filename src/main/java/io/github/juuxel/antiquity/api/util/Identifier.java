@@ -3,6 +3,7 @@ package io.github.juuxel.antiquity.api.util;
 import java.util.Objects;
 
 public final class Identifier {
+    public static final String DEFAULT_NAMESPACE = "minecraft";
     private static final String NAMESPACE_REGEX = "^[a-z0-9-_]+$";
     private static final String PATH_REGEX = "^[a-z0-9-_./]+$";
 
@@ -18,15 +19,23 @@ public final class Identifier {
         Objects.requireNonNull(combined, "combined identifier");
         String[] split = combined.split(":");
 
-        if (split.length != 2) {
-            throw new IllegalArgumentException("Combined ID string '" + combined + "' should have exactly two components! Found: " + split.length);
+        switch (split.length) {
+            case 1:
+                this.namespace = DEFAULT_NAMESPACE;
+                this.path = validatePath(combined);
+                break;
+
+            case 2:
+                String namespace = split[0];
+                String path = split[1];
+
+                this.namespace = validateNamespace(namespace);
+                this.path = validatePath(path);
+                break;
+
+            default:
+                throw new IllegalArgumentException("Combined ID string '" + combined + "' should have exactly two components! Found: " + split.length);
         }
-
-        String namespace = Objects.requireNonNull(split[0], "namespace");
-        String path = Objects.requireNonNull(split[1], "path");
-
-        this.namespace = validateNamespace(namespace);
-        this.path = validatePath(path);
     }
 
     private static String validateNamespace(String namespace) {
