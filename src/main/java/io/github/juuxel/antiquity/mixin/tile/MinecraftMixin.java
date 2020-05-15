@@ -35,7 +35,7 @@ abstract class MinecraftMixin {
             int y = hitResult.y;
             int z = hitResult.z;
             Tile tile = Tile.tiles[level.getTile(x, y, z)];
-            if (ExtendedTile.of(tile).use(level, x, y, z, Direction.values()[hitResult.f], player)) {
+            if (tile != null && ExtendedTile.of(tile).use(level, x, y, z, Direction.values()[hitResult.f], player)) {
                 field_644.field_441.handSwinging = true;
                 info.cancel();
             }
