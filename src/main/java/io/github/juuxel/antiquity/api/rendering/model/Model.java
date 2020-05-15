@@ -56,7 +56,7 @@ public final class Model {
     public Texture resolveTexture(String key) {
         // TODO: circular
         Texture value = textures.get(key);
-        return value == null ? Texture.DEFAULT : (value.path.startsWith("#") ? resolveTexture(value.path) : value);
+        return value == null ? Texture.MISSINGNO : (value.path.startsWith("#") ? resolveTexture(value.path) : value);
     }
 
     public Set<String> getResolvedTextures() {

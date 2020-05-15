@@ -1,12 +1,11 @@
 package io.github.juuxel.antiquity.api.rendering;
 
-import io.github.juuxel.antiquity.api.tile.ExtendedTile;
 import io.github.juuxel.antiquity.api.util.Identifier;
 
 import java.util.Objects;
 
 public final class Texture {
-    public static final Texture DEFAULT = new Texture(ExtendedTile.DEFAULT_TEXTURE, 0);
+    public static final Texture MISSINGNO = new Texture(new Identifier("antiquity", "missingno"), 0);
     public final String path;
     public final int index;
 
