@@ -44,24 +44,24 @@ public final class ModelLoader {
         });
     }
 
-    private static TileModels getTileModelMap(Identifier id, Tile tile) {
+    private static TileModels getTileModels(Identifier id, Tile tile) {
         return tileModels.computeIfAbsent(id, it -> {
             try {
                 return loadTileModels(id, tile);
             } catch (Exception e) {
-                // TODO: fallback?
-                throw new RuntimeException("Could not load tile state definition " + id, e);
+                LOGGER.warn("Could not load tile state definition {}", id, e);
+                return TileModels.missingno(tile);
             }
         });
     }
 
     public static Model getTileModel(Identifier id, TileState state) {
-        TileModels models = getTileModelMap(id, state.getTile());
+        TileModels models = getTileModels(id, state.getTile());
         return getModel(models.variants.get(state).model);
     }
 
     public static Set<Model> getAllTileModels(Identifier id, Tile tile) {
-        TileModels models = getTileModelMap(id, tile);
+        TileModels models = getTileModels(id, tile);
         Set<Model> result = new HashSet<>();
 
         for (TileState state : ExtendedTile.of(tile).getStateManager().getStates()) {

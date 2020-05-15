@@ -78,6 +78,16 @@ public final class TileModels {
         return new TileModels(variants);
     }
 
+    public static TileModels missingno(Tile tile) {
+        Map<TileState, Variant> variants = new HashMap<>();
+
+        for (TileState state : ExtendedTile.of(tile).getStateManager().getStates()) {
+            variants.put(state, Variant.MISSINGNO);
+        }
+
+        return new TileModels(variants);
+    }
+
     public static final class Variant {
         public static final Variant MISSINGNO = new Variant(new Identifier("antiquity", "missingno"), 0, 0, false);
 
