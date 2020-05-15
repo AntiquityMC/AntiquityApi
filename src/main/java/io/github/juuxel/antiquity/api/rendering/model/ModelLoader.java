@@ -19,9 +19,9 @@ import java.util.*;
 public final class ModelLoader {
     private static final Logger LOGGER = LogManager.getLogger();
     private static final Gson GSON = new Gson();
-    private static final Model EMPTY = new Model(null, Collections.emptyMap(), Collections.emptyList());
     private static final Map<Identifier, Model> models = new HashMap<>();
     private static final Map<Identifier, TileModels> tileModels = new HashMap<>();
+    private static final Model MISSINGNO = getModelUnchecked(new Identifier("antiquity", "missingno"));
 
     public static Model getModel(Identifier id) {
         return models.computeIfAbsent(id, it -> {
@@ -29,7 +29,17 @@ public final class ModelLoader {
                 return loadModel(id);
             } catch (Exception e) {
                 LOGGER.warn("Could not load model {}", id, e);
-                return EMPTY;
+                return MISSINGNO;
+            }
+        });
+    }
+
+    private static Model getModelUnchecked(Identifier id) {
+        return models.computeIfAbsent(id, it -> {
+            try {
+                return loadModel(id);
+            } catch (IOException e) {
+                throw new UncheckedIOException("Could not load core model: " + id, e);
             }
         });
     }
