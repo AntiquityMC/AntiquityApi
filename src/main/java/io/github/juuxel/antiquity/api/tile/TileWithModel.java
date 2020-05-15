@@ -4,18 +4,20 @@ import com.mojang.minecraft.level.Level;
 import com.mojang.minecraft.level.tile.Tile;
 import com.mojang.minecraft.renderer.Tesselator;
 import io.github.juuxel.antiquity.api.level.ExtendedLevel;
+import io.github.juuxel.antiquity.api.registry.Registry;
 import io.github.juuxel.antiquity.api.rendering.Texture;
 import io.github.juuxel.antiquity.api.rendering.model.Model;
 import io.github.juuxel.antiquity.api.rendering.model.ModelLoader;
 import io.github.juuxel.antiquity.api.tile.state.TileState;
 import io.github.juuxel.antiquity.api.util.Identifier;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
 public class TileWithModel extends Tile implements ExtendedTile {
-    private final Identifier modelId;
+    private final @Nullable Identifier modelId;
 
     public TileWithModel(int id, Identifier modelId) {
         super(id);
@@ -27,15 +29,36 @@ public class TileWithModel extends Tile implements ExtendedTile {
         this.modelId = modelId;
     }
 
+    public TileWithModel(int id) {
+        this(id, null);
+    }
+
+    public TileWithModel(int id, int tex) {
+        this(id, tex, null);
+    }
+
+    private Identifier getModelId() {
+        if (modelId != null) {
+            return modelId;
+        }
+
+        Identifier registryId = Registry.TILE.getId(this);
+        if (registryId != null) {
+            return registryId;
+        }
+
+        throw new IllegalStateException("No model ID provided for unregistered tile " + id);
+    }
+
     public Model getModel(TileState state) {
-        return ModelLoader.getTileModel(modelId, state);
+        return ModelLoader.getTileModel(getModelId(), state);
     }
 
     @Override
     public Collection<String> getAllTextures() {
         Set<String> textures = new HashSet<>();
 
-        for (Model model : ModelLoader.getAllTileModels(modelId, this)) {
+        for (Model model : ModelLoader.getAllTileModels(getModelId(), this)) {
             textures.addAll(model.getResolvedTextures());
         }
 

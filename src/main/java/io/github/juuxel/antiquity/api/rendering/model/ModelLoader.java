@@ -90,6 +90,7 @@ public final class ModelLoader {
         try (InputStream in = Textures.class.getResourceAsStream(path)) {
             InputStream usedStream = in;
             if (in == null) {
+                LOGGER.info("Creating virtual tile state JSON for tile " + tile.id + " with model ID " + id);
                 String json = "{\"variants\":{\"\":{\"model\":\"" + id + "\"}}}";
                 usedStream = new ByteArrayInputStream(json.getBytes(StandardCharsets.UTF_8));
             }
