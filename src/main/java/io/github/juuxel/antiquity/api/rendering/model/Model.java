@@ -13,11 +13,14 @@ import io.github.juuxel.antiquity.api.rendering.Texture;
 import io.github.juuxel.antiquity.api.tile.Direction;
 import io.github.juuxel.antiquity.api.util.Identifier;
 import io.github.juuxel.antiquity.impl.rendering.TerrainAtlasImpl;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
 public final class Model {
+    private static final Logger LOGGER = LogManager.getLogger();
     public final @Nullable Model parent;
     public final Map<String, Texture> textures;
     public final Collection<Element> elements;
@@ -339,9 +342,25 @@ public final class Model {
                 }
             }
 
-            return json.has("cull")
-                    ? new Face(texture, u0, v0, u1, v1, json.getAsJsonPrimitive("cull").getAsBoolean())
-                    : new Face(texture, u0, v0, u1, v1);
+            if (json.has("cullface")) {
+                String cullfaceStr = json.getAsJsonPrimitive("cullface").getAsString();
+                Direction cullface = Direction.of(cullfaceStr);
+
+                if (cullface == null) {
+                    throw new IllegalArgumentException("Unknown cullface direction: " + cullfaceStr);
+                }
+
+                if (cullface != side) {
+                    // TODO: Implement cullfaces properly
+                    LOGGER.warn("Different cullfaces are currently not supported (trying to use {} for {})", cullface, side);
+                }
+
+                return new Face(texture, u0, v0, u1, v1, cullface == side);
+            } else if (json.has("cull")) {
+                return new Face(texture, u0, v0, u1, v1, json.getAsJsonPrimitive("cull").getAsBoolean());
+            } else {
+                return new Face(texture, u0, v0, u1, v1);
+            }
         }
     }
 
