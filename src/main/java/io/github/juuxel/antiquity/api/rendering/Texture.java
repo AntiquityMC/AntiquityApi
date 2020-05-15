@@ -39,10 +39,21 @@ public final class Texture {
     }
 
     public static Texture fromString(String texture) {
-        if (texture.contains("#")) {
+        if (texture.startsWith("#")) {
+            String[] split = texture.substring(1).split("#");
+
+            switch (split.length) {
+                case 1:
+                    return new Texture(texture, 0);
+                case 2:
+                    return new Texture("#" + split[0], Integer.parseInt(split[1]));
+                default:
+                    throw new IllegalArgumentException("Texture '" + texture + "' should contain at most two components!");
+            }
+        } else if (texture.contains("#")) {
             String[] split = texture.split("#");
             if (split.length != 2) {
-                throw new IllegalArgumentException("Texture '" + texture + "' should contain at most one # character!");
+                throw new IllegalArgumentException("Texture '" + texture + "' should contain at most two components!");
             }
 
             return new Texture(new Identifier(split[0]), Integer.parseInt(split[1]));
