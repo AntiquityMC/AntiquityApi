@@ -12,6 +12,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
+import java.util.function.IntFunction;
 
 /**
  * A simple bimap-based registry implementation.
@@ -81,6 +82,11 @@ public class SimpleRegistry<T> implements Registry<T> {
         }
 
         return entry;
+    }
+
+    @Override
+    public <U extends T> U register(Identifier id, IntFunction<? extends U> entryFunction) {
+        return register(id, entryFunction.apply(nextId));
     }
 
     @Override

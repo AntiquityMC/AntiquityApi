@@ -6,6 +6,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 import java.util.function.BiConsumer;
+import java.util.function.IntFunction;
 
 public interface Registry<T> extends Iterable<Map.Entry<Identifier, T>> {
     // TODO: Add vanilla entries?
@@ -67,6 +68,20 @@ public interface Registry<T> extends Iterable<Map.Entry<Identifier, T>> {
      * @throws IllegalArgumentException if the ID or the entry has already been registered
      */
     <U extends T> U register(Identifier id, U entry);
+
+    /**
+     * Registers a computed entry to the registry.
+     * The entry computation function is passed the raw ID of the entry.
+     *
+     * <p>This method also notifies all registration listeners for this registry.
+     *
+     * @param id            the ID
+     * @param entryFunction the entry function
+     * @param <U>           the entry type
+     * @return the entry
+     * @throws IllegalArgumentException if the ID or the entry has already been registered
+     */
+    <U extends T> U register(Identifier id, IntFunction<? extends U> entryFunction);
 
     /**
      * Adds a registration listener that will be notified each time a new entry is registered.
